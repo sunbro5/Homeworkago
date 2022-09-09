@@ -1,5 +1,6 @@
 package com.example.configuration;
 
+import com.example.EmbededMongoDb;
 import com.mongodb.client.MongoClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

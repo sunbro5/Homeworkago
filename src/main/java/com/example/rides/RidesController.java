@@ -1,7 +1,8 @@
-package com.example;
+package com.example.rides;
 
 import com.example.external.rides.RidesExternalService;
 import com.example.external.rides.model.Ride;
+import com.example.model.RideResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +16,10 @@ import java.util.List;
 @RequestMapping("/rides")
 public class RidesController {
 
-    private final RidesExternalService ridesExternalService; //TODO add service with async
+    private final RidesService ridesService; //TODO add service with async
 
     @GetMapping()
-    public List<Ride> test(@RequestParam int offset, @RequestParam int limit){
-        return ridesExternalService.getRides(offset, limit); // TODO RideResponse
+    public List<RideResponse> test(@RequestParam int offset, @RequestParam int limit){
+        return ridesService.getRides(offset, limit);
     }
 }

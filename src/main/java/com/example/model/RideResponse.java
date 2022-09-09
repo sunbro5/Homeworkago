@@ -1,4 +1,4 @@
 package com.example.model;
 
-public record RideResponse(String timestamp, String driverName, String pickup, String destination) {
+public record RideResponse(String createdAt, String driverName, String pickup, String destination) {
 }

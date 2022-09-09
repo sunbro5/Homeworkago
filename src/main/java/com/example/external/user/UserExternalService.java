@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class UserExternalService {
 
     @Value("${mock_api.url:https://0mj0y.mocklab.io}")
     private String apiUrl;
 
-    private final RestTemplate mockApiRest;
+    //private final RestTemplate mockApiRest;
 
 
 }

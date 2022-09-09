@@ -1,4 +1,4 @@
-package com.example.configuration;
+package com.example;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodStarter;
