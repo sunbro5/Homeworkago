@@ -1,13 +1,12 @@
 package com.example.rides;
 
-import com.example.external.rides.RidesExternalService;
-import com.example.external.rides.model.Ride;
-import com.example.model.RideResponse;
+import com.example.comment.CommentService;
+import com.example.comment.model.CommentAddRequest;
+import com.example.rides.model.RideDetailResponse;
+import com.example.rides.model.RideResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,10 +15,24 @@ import java.util.List;
 @RequestMapping("/rides")
 public class RidesController {
 
-    private final RidesService ridesService; //TODO add service with async
+    private final RidesService ridesService;
+    private final CommentService commentService;
 
     @GetMapping()
-    public List<RideResponse> test(@RequestParam int offset, @RequestParam int limit){
+    public List<RideResponse> rides(@RequestParam int offset, @RequestParam int limit){
         return ridesService.getRides(offset, limit);
     }
+
+    @GetMapping("/{id}")
+    public RideDetailResponse rideDetail(@PathVariable String id){
+        return ridesService.getRideDetail(id)
+                .orElse(null);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/comment")
+    public void addCommentForRide(@RequestBody CommentAddRequest commentAddRequest){
+        commentService.addComment(commentAddRequest);
+    }
+
 }

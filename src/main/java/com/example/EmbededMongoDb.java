@@ -19,7 +19,8 @@ import java.io.IOException;
 @Getter
 public class EmbededMongoDb {
 
-    public final String localhost = "localhost";
+    public static final String LOCALHOST = "localhost";
+
     // TODO some alternative ? https://github.com/spring-projects/spring-framework/issues/28052
     public final int port = SocketUtils.findAvailableTcpPort();
 
@@ -30,7 +31,7 @@ public class EmbededMongoDb {
         ImmutableMongodConfig mongodConfig = MongodConfig
                 .builder()
                 .version(Version.Main.PRODUCTION)
-                .net(new Net(localhost, port, Network.localhostIsIPv6()))
+                .net(new Net(LOCALHOST, port, Network.localhostIsIPv6()))
                 .build();
 
         MongodStarter starter = MongodStarter.getDefaultInstance();

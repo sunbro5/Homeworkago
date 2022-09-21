@@ -13,7 +13,7 @@ public class MongoConfiguration {
 
     @Bean
     public MongoTemplate mongoTemplate(EmbededMongoDb embededMongoDb) {
-        return new MongoTemplate(MongoClients.create(String.format(CONNECTION_STRING, embededMongoDb.getLocalhost(),
+        return new MongoTemplate(MongoClients.create(String.format(CONNECTION_STRING, EmbededMongoDb.LOCALHOST,
                 embededMongoDb.getPort())), "test");
     }
 
