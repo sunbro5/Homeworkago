@@ -64,12 +64,15 @@ public class RidesService {
     }
 
     private Optional<User> getUserFromFuture(CompletableFuture<Optional<User>> user) {
+        return getFromFuture(user, Optional.empty());
+    }
+    private <T> T getFromFuture(CompletableFuture<T> user, T defaultValue) {
         try {
             return user.get();
         } catch (InterruptedException | ExecutionException e) {
             log.error("Did not process external call", e);
             Thread.currentThread().interrupt();
-            return Optional.empty();
+            return defaultValue;
         }
     }
 
@@ -82,8 +85,9 @@ public class RidesService {
     private RideDetailResponse fillRideDetailResponse(Ride ride){
         CompletableFuture<Optional<User>> driverFuture = userExternalService.getUserDetail(ride.driverId());
         CompletableFuture<Optional<User>> passengerFuture = userExternalService.getUserDetail(ride.passengerId());
+        CompletableFuture<List<Comment>> commentsFuture = commentService.getCommentForRideId(ride.id());
 
-        CompletableFuture.allOf(driverFuture, passengerFuture).join();
+        CompletableFuture.allOf(driverFuture, passengerFuture, commentsFuture).join();
 
         String driverName = getUserFromFuture(driverFuture)
                 .map(this::getUserName)
@@ -93,7 +97,7 @@ public class RidesService {
                 .map(this::getUserName)
                 .orElse(null);
 
-        List<Comment> comments = commentService.getCommentForRideId(ride.id());
+        List<Comment> comments = getFromFuture(commentsFuture, List.of());
 
         return rideMapper.toRideDetailResponse(ride, driverName, passengerName, comments);
     }
